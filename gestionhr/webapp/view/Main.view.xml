@@ -1,0 +1,31 @@
+<mvc:View
+    controllerName="logaligroup.gestionhr.controller.Main"
+    xmlns:mvc="sap.ui.core.mvc"
+    displayBlock="true"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+    <Page id="_IDGenPage1" title="{i18n>titMenu}" showHeader="false">
+        <content>
+            <FlexBox id="_IDGenFlexBox1" alignItems="Center" justifyContent="Center">
+                <Text id="_IDGenText1" text="{i18n>titMenu}"></Text>
+            </FlexBox > 
+            <Panel id="_IDGenPanel2" headerText="{i18n>emp}" expandable="true" expanded="true"> 
+			    <GenericTile id="_IDGenGenericTile1" headerImage="sap-icon://add-employee" class="sapUiTinyMarginBegin sapUiTinyMarginTop" press="createEmployee">
+	                <TileContent id="_IDGenTileContent1" footer="{i18n>crearEmp}">
+				    </TileContent>
+				</GenericTile>
+                <GenericTile id="_IDGenGenericTile2" headerImage="sap-icon://employee-lookup" class="sapUiTinyMarginBegin sapUiTinyMarginTop" press="showEmployee">
+	    			<TileContent id="_IDGenTileContent3" footer="{i18n>verEmp}">
+					</TileContent>
+		    	</GenericTile>
+            </Panel>
+            <Panel id="_IDGenPanel1" headerText="{i18n>ped}" expandable="true" expanded="true"> 
+     			<GenericTile id="linkFirmarPedido"  headerImage="sap-icon://signature" class="sapUiTinyMarginBegin sapUiTinyMarginTop" >
+					<TileContent id="_IDGenTileContent2" footer="{i18n>firmarPed}">
+					</TileContent>
+				</GenericTile> 
+            </Panel>
+
+        </content>
+    </Page>
+</mvc:View>

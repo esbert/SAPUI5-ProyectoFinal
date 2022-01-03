@@ -1,0 +1,45 @@
+<mvc:View
+    controllerName="logaligroup.gestionhr.controller.CreateEmp"
+    xmlns:mvc="sap.ui.core.mvc"
+    displayBlock="true"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+    <Page id="creteEmp" title="{i18n>crearEmp}" showHeader="false">
+        <content>
+            <FlexBox id="_IDGenFlexBox1"  alignItems="Center" justifyContent="Center">
+                <Text id="_IDGenText1" text="{i18n>crearEmp}"></Text>
+            </FlexBox > 
+            <NavContainer id="wizardNavContainer">
+            	<pages>
+                    <Page
+                    id="wizardContentPage"
+                    showHeader="false">
+                        <Wizard id="CreateProductWizard" class="sapUiResponsivePadding--header sapUiResponsivePadding--content"
+						    		complete="wizardCompletedHandler">
+                            
+                            <WizardStep id="ProductTypeStep"
+										title="Product Type"
+										validated="true">
+                                					<HBox id="_IDGenHBox1"
+										alignItems="Center"
+										justifyContent="Center"
+										width="100%">
+									<SegmentedButton id="_IDGenSegmentedButton1"
+										width="320px"
+										selectionChange="setProductTypeFromSegmented">
+										<items>
+											<SegmentedButtonItem id="_IDGenSegmentedButtonItem1" icon="sap-icon://iphone" text="Mobile"/>
+											<SegmentedButtonItem id="_IDGenSegmentedButtonItem2" icon="sap-icon://sys-monitor" text="Desktop"/>
+											<SegmentedButtonItem id="_IDGenSegmentedButtonItem3" icon="sap-icon://database" text="Other"/>
+										</items>
+									</SegmentedButton>
+								</HBox>        
+                            </WizardStep>            
+                                    
+                        </Wizard>
+                    </Page>
+                </pages>
+           	</NavContainer>
+        </content>
+    </Page>
+</mvc:View>
