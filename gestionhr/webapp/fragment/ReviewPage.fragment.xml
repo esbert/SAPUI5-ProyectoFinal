@@ -1,0 +1,50 @@
+<core:FragmentDefinition 
+xmlns:core="sap.ui.core"
+xmlns:mvc="sap.ui.core.mvc"
+xmlns="sap.m"
+xmlns:form="sap.ui.layout.form">
+		<form:SimpleForm id="_IDGenSimpleForm1" 
+				title="1. {i18n>tipoEmpleado}"
+				minWidth="1024"
+				editable="false"
+				layout="ResponsiveGridLayout">
+			<form:content>
+				<Label text="{i18n>tipo}"/>
+				<Text  text="{=${wizard>/type} === '1' ? ${i18n>interno} : ${wizard>/type} === '2' ? ${i18n>autonomo} : ${i18n>gerente}}"/>
+				<Link  press="onEditarTipoEmpleado" text="{i18n>editar}" />
+			</form:content>
+		</form:SimpleForm>
+		
+		<form:SimpleForm 
+				title="2. {i18n>datosEmpleado}"
+				minWidth="1024"
+				editable="false"
+				layout="ResponsiveGridLayout">
+			<form:content>
+				<Label text="{i18n>nombre}"/>
+				<Text text="{wizard>/nombre}"/>
+				<Label text="{i18n>apellido}"/>
+				<Text text="{wizard>/apellido}"/>
+				<Label text="{= ${wizard>/type} === '1' ? ${i18n>cif} : ${i18n>dni}}"/>
+				<Text text="{wizard>/cifDin}"/>
+				<Label text="{= ${wizard>/type} === '1' ? ${i18n>salarioBrutoAnual} : ${i18n>precioDiario}}"/>
+				<Text text="{wizard>/salario}"/>
+				<Label text="{i18n>fechaIncorporacion}"/>
+				<Text text="{path:'wizard>/fechaIncorporacion',type:'sap.ui.model.type.Date'}"/>
+				<Link press="onDatosEmpleado" text="{i18n>editar}" />
+			</form:content>
+		</form:SimpleForm>
+		
+		<form:SimpleForm 
+				title="3. {i18n>infAdicional}"
+				minWidth="1024"
+				editable="false"
+				layout="ResponsiveGridLayout">
+			<form:content>
+				<Label text="{i18n>come}"/>
+				<Text text="{wizard>/come}"/>
+				<Link press="onInfAdicional" text="{i18n>editar}" />
+			</form:content>
+		</form:SimpleForm>
+		
+</core:FragmentDefinition>

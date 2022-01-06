@@ -1,0 +1,63 @@
+<core:FragmentDefinition
+   xmlns="sap.m"
+   xmlns:core="sap.ui.core" 
+   xmlns:form="sap.ui.layout.form"
+   xmlns:u="sap.ui.unified">
+     <form:SimpleForm id="idForm" editable="true"
+     	    layout="ResponsiveGridLayout"
+			labelSpanXL="4"
+			labelSpanL="3"
+			labelSpanM="4"
+			labelSpanS="12"
+			adjustLabelSpan="false"
+			emptySpanXL="0"
+			emptySpanL="4"
+			emptySpanM="0"
+			emptySpanS="0"
+			columnsXL="2"
+			columnsL="1"
+			columnsM="1"
+			singleContainerFullSize="false"
+			ariaLabelledBy="Title1">
+        <form:content>    
+        	<Toolbar ariaLabelledBy="Title2">
+				<Title id="Title2" text="Interno"/>
+			</Toolbar>
+            <Label text="Nombre:" required="true"/>
+            <Input id="inpNombre" valueState="{wizard>firstName}" placeholder="Ingrese el nombre" />
+            <Label text="Apellido:" required="true"/>
+            <Input placeholder="Ingrese el apellido"/>
+            <Label text="CIF:" required="true"/>
+            <Input placeholder="Ingrese el CIF" />
+            <Label text="Precio Diario:" required="true"/>
+            <Input placeholder="Ingrese el Precio" />
+            <Label text="Fecha de Incorporación:" required="true"/>
+            <Input placeholder="Ingrese Fecha" />
+
+        </form:content>    
+     <!-- <VBox alignItems="Center" 
+          justifyContent="Center"
+		width="100%">
+	    <Text text="Name"/>
+         <HBox>
+        <Label text="Name" required="true"/>
+		<Input valueStateText="Enter 6 symbols or more"
+	        	id="ProductName" liveChange="additionalInfoValidation"
+		        placeholder="Enter name with length greater than 6" />
+         </HBox>
+         <HBox>
+            <Label text="Nombre:" required="true"/>
+            <Input placeholder="Ingrese el nombre"/>
+         </HBox>
+         <HBox>
+            <Label text="Apellido:" required="true"/>
+            <Input placeholder="Ingrese el apellido"/>
+         </HBox>
+         <HBox>
+            <Label text="CIF:" required="true"/>
+            <Input placeholder="Ingrese el CIF" ></Input>
+         </HBox>
+
+	</VBox> -->
+    </form:SimpleForm>
+</core:FragmentDefinition>

@@ -3,7 +3,9 @@
     xmlns:mvc="sap.ui.core.mvc"
     displayBlock="true"
     xmlns="sap.m"
-    xmlns:core="sap.ui.core">
+    xmlns:core="sap.ui.core"
+	xmlns:form="sap.ui.layout.form"
+	xmlns:u="sap.ui.unified">
     <Page id="creteEmp" title="{i18n>crearEmp}" showHeader="false">
         <content>
             <FlexBox id="_IDGenFlexBox1"  alignItems="Center" justifyContent="Center">
@@ -14,30 +16,158 @@
                     <Page
                     id="wizardContentPage"
                     showHeader="false">
-                        <Wizard id="CreateProductWizard" class="sapUiResponsivePadding--header sapUiResponsivePadding--content"
+                        <Wizard id="CreateEmpleado" class="sapUiResponsivePadding--header sapUiResponsivePadding--content"
 						    		complete="wizardCompletedHandler">
-                            
-                            <WizardStep id="ProductTypeStep"
-										title="Product Type"
-										validated="true">
-                                					<HBox id="_IDGenHBox1"
+                            <WizardStep id="tipoEmpleado"
+										title="{i18n>tipoEmpleado}"
+										validated="false">
+                            	<MessageStrip id="_IDGenMessageStrip1" class="sapUiSmallMarginBottom"
+										text="{i18n>seleTipEmp}"
+										showIcon="true"/>    
+                                <HBox id="_IDGenHBox1"
 										alignItems="Center"
 										justifyContent="Center"
 										width="100%">
-									<SegmentedButton id="_IDGenSegmentedButton1"
+									
+                                    <SegmentedButton id="_IDGenSegmentedButton1"
 										width="320px"
 										selectionChange="setProductTypeFromSegmented">
 										<items>
-											<SegmentedButtonItem id="_IDGenSegmentedButtonItem1" icon="sap-icon://iphone" text="Mobile"/>
-											<SegmentedButtonItem id="_IDGenSegmentedButtonItem2" icon="sap-icon://sys-monitor" text="Desktop"/>
-											<SegmentedButtonItem id="_IDGenSegmentedButtonItem3" icon="sap-icon://database" text="Other"/>
+											<SegmentedButtonItem id="_IDGenSegmentedButtonItem1" icon="sap-icon://add-employee" text="{i18n>interno}" press="onInterno"/>
+											<SegmentedButtonItem id="_IDGenSegmentedButtonItem2" icon="sap-icon://add-employee" text="{i18n>autonomo}" press="onAutonomo"/>
+											<SegmentedButtonItem id="_IDGenSegmentedButtonItem3" icon="sap-icon://add-employee" text="{i18n>gerente}" press="onGerente"/>
 										</items>
 									</SegmentedButton>
 								</HBox>        
+                            </WizardStep>   
+                           	<WizardStep id="datosEmpleado"
+										validated="false"
+										title="{i18n>datosEmpleado}"
+										activate="additionalInfoValidation">  
+                                <form:SimpleForm id="idForm" editable="true"
+                                    layout="ResponsiveGridLayout"
+                                    labelSpanXL="4"
+                                    labelSpanL="3"
+                                    labelSpanM="4"
+                                    labelSpanS="12"
+                                    adjustLabelSpan="false"
+                                    emptySpanXL="0"
+                                    emptySpanL="4"
+                                    emptySpanM="0"
+                                    emptySpanS="0"
+                                    columnsXL="2"
+                                    columnsL="1"
+                                    columnsM="1"
+                                    singleContainerFullSize="false"
+                                    ariaLabelledBy="Title1">
+                                    <MessageStrip id="_IDGenMessageStrip2" class="sapUiSmallMarginBottom"
+										text="{i18n>completeDatosEmp}"
+										showIcon="true"/>   
+                                    <Label id="_IDGenLabel1" text="{i18n>nombre}" required="true" />
+                                    <Input id="inpNombre" value="{wizard>/nombre}" valueState="{wizard>/nombreState}" placeholder="Ingrese el nombre" change="onValidarEmpleados"/>
+                                    <Label id="_IDGenLabel2" text="{i18n>apellido}" required="true"/>
+                                    <Input id="_IDGenInput1" value="{wizard>/apellido}" valueState="{wizard>/apellidoState}" placeholder="Ingrese el apellido" change="onValidarEmpleados"/>
+                                    <Label id="_IDGenLabel3" text="{= ${wizard>/type} === '1' ? ${i18n>cif} : ${i18n>dni}}" required="true"/>
+                                    <Input id="_IDGenInput2" value="{wizard>/cifDin}" valueState="{wizard>/state}" placeholder="" change="onValDIN"/>
+                                </form:SimpleForm>
+                                 <form:SimpleForm id="idForm2" editable="true"    
+                                    layout="ResponsiveGridLayout"
+                                    labelSpanXL="4"
+                                    labelSpanL="3"
+                                    labelSpanM="4"
+                                    labelSpanS="12"
+                                    adjustLabelSpan="false"
+                                    emptySpanXL="0"
+                                    emptySpanL="4"
+                                    emptySpanM="0"
+                                    emptySpanS="0"
+                                    columnsXL="2"
+                                    columnsL="1"
+                                    columnsM="1"
+                                    singleContainerFullSize="false"
+                                    ariaLabelledBy="Title1">
+                                    <Label id="_IDGenLabel4" text="{= ${wizard>/type} === '1' ? ${i18n>salarioBrutoAnual} : ${i18n>precioDiario}}" required="true"/>
+                                    <Slider id="_IDGenSlider1" value="{wizard>/salario}"
+														min="12000" 
+														max="80000"
+														step="1000" inputsAsTooltips="true" showAdvancedTooltip="true" enableTickmarks="true"
+														 width="100%" progress="false" class="sapUiSmallMarginBottom" 
+														 visible="{=  ${/_type} === 'interno'}">
+														<ResponsiveScale id="_IDGenResponsiveScale1" tickmarksBetweenLabels="100"/>
+									</Slider>
+                                </form:SimpleForm>    
+                                <form:SimpleForm id="idForm3" editable="true"    
+                                    layout="ResponsiveGridLayout"
+                                    labelSpanXL="4"
+                                    labelSpanL="3"
+                                    labelSpanM="4"
+                                    labelSpanS="12"
+                                    adjustLabelSpan="false"
+                                    emptySpanXL="0"
+                                    emptySpanL="4"
+                                    emptySpanM="0"
+                                    emptySpanS="0"
+                                    columnsXL="2"
+                                    columnsL="1"
+                                    columnsM="1"
+                                    singleContainerFullSize="false"
+                                    ariaLabelledBy="Title1">
+                                    <Label id="_IDGenLabel5" text="{i18n>fechaIncorporacion}" required="true"/>
+                                    <DatePicker id="_IDGenDatePicker1" valueState="{wizard>/fechaIncorporacionState}" dateValue="{wizard>/fechaIncorporacion}" change="onValidarEmpleados"></DatePicker>
+                                </form:SimpleForm>
+
+                                   <!-- <content>
+                                   </content>      -->
+                                  <!-- <mvc:XMLView id="prueba" viewName="logaligroup.gestionhr.view.Fabian" visible="false"/> -->
+                                  <!-- <core:Fragment fragmentName="logaligroup.gestionhr.fragment.HelloDialog" type="XML" />  -->
+                            </WizardStep>  
+                           	<WizardStep id="infAdicional"
+										validated="false"
+										activate="optionalStepActivation"
+										title="{i18n>infAdicional}">   
+                                <MessageStrip id="_IDGenMessageStrip3" class="sapUiSmallMarginBottom"
+										text="{i18n>messageInfAdi}"
+										showIcon="true"/>   
+                                 <Label id="_IDGenLabel6" text="{i18n>come}" width="100%"></Label>
+								<TextArea id="_IDGenTextArea1" value="{wizard>/come}" width="100%"></TextArea>       
+                                <UploadCollection id='uploadCollection'
+                                    maximumFilenameLength="55"
+                                     maximumFileSize="10"
+                                     multiple="true"
+                                     sameFilenameAllowed="true"
+                                     instantUpload="false" 
+                                     uploadUrl="/sap/opu/odata/sap/ZEMPLOYEES_SRV/Attachments"   
+                                     change="onFileChange"
+                                     uploadComplete="onFileUploadComplete"
+                                     beforeUploadStarts="onFileBeforeUpload"
+                                     noDataDescription="{i18n>Arraficheros}" />
+                                     <Button id="_IDGenButton2" text="{i18n>revisar}" icon="sap-icon://cancel" press="onRevisar"/>          
                             </WizardStep>            
                                     
                         </Wizard>
+                        <footer>
+							<OverflowToolbar id="_IDGenOverflowToolbar1">
+								<ToolbarSpacer id="_IDGenToolbarSpacer1"/>
+								<Button id="_IDGenButton1" text="{i18n>canc}" icon="sap-icon://cancel" press="onCancelar"/>
+							</OverflowToolbar>
+						</footer>
                     </Page>
+                	<Page id="revisar" title="{i18n>crearEmpleado}" showHeader="false">
+                          <HBox id="_IDGenHBox2" 
+										alignItems="Center"
+										justifyContent="Center"
+										width="100%">
+                                <Text text="{i18n>res}" />           
+                          </HBox>              
+						<core:Fragment fragmentName="logaligroup.gestionhr.fragment.ReviewPage" type="XML"/>
+						<footer>
+							<Toolbar id="_IDGenToolbar1">
+								<ToolbarSpacer id="_IDGenToolbarSpacer2"></ToolbarSpacer>
+								<Button id="_IDGenButton3" text="{i18n>save}" press="onGuardarEmpleado"></Button>
+								<Button id="_IDGenButton4" text="{i18n>canc>}" press="onCancelar"></Button>
+							</Toolbar>
+						</footer>
+				</Page>
                 </pages>
            	</NavContainer>
         </content>
