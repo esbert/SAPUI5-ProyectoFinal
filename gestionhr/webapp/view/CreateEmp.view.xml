@@ -86,7 +86,7 @@
                                     columnsM="1"
                                     singleContainerFullSize="false"
                                     ariaLabelledBy="Title1">
-                                    <Label id="_IDGenLabel4" text="{= ${wizard>/type} === '1' ? ${i18n>salarioBrutoAnual} : ${i18n>precioDiario}}" required="true"/>
+                                    <Label id="_IDGenLabel4" text="{= ${wizard>/type} === '1' ? ${i18n>precioDiario} : ${i18n>salarioBrutoAnual}}" required="true"/>
                                     <Slider id="_IDGenSlider1" value="{wizard>/salario}"
 														min="12000" 
 														max="80000"
@@ -163,9 +163,9 @@
 						<footer>
 							<Toolbar id="_IDGenToolbar1">
 								<ToolbarSpacer id="_IDGenToolbarSpacer2"></ToolbarSpacer>
-								<Button id="_IDGenButton3" text="{i18n>save}" press="onGuardarEmpleado"></Button>
-								<Button id="_IDGenButton4" text="{i18n>canc>}" press="onCancelar"></Button>
-							</Toolbar>
+								<Button id="_IDGenButton3" text="{i18n>save}" icon="sap-icon://BusinessSuiteInAppSymbols/icon-save-as" press="onGuardarEmpleado"></Button>
+								<Button id="_IDGenButton4" text="{i18n>canc>}" icon="sap-icon://cancel" press="onCancelar"></Button>
+  							</Toolbar>
 						</footer>
 				</Page>
                 </pages>

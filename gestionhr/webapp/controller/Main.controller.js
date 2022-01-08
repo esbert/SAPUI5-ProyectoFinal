@@ -14,6 +14,10 @@ sap.ui.define([
             createEmployee: function() {
                 var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
                 oRouter.navTo("CreateEmp",{},false);
+            },
+            onEmployees: function() {
+                window.location.assign("https://f0eac712trial-dev-logali-approuter.cfapps.us10.hana.ondemand.com/logaligroupemployees/index.html");
             }
+
         });
     });

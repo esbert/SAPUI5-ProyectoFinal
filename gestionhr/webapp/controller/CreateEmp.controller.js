@@ -1,18 +1,20 @@
 sap.ui.define([
     "sap/ui/core/mvc/Controller",
-    "sap/ui/model/json/JSONModel"
+    "sap/ui/model/json/JSONModel",
+    "sap/m/MessageBox"
 ],
     /**
      * @param {typeof sap.ui.core.mvc.Controller} Controller
      * @param {typeof sap.ui.model.json.JSONModel} JSONModel
+     * @param {typeof sap.m.MessageBox} MessageBox
      */
-    function (Controller, JSONModel) {
+    function (Controller, JSONModel, MessageBox) {
         "use strict";
 
         return Controller.extend("logaligroup.gestionhr.controller.CreateEmp", {
-         
-            onBeforeRendering: function() {
-                var prueba;
+
+            onBeforeRendering: function () {
+
             },
 
             onInit: function () {
@@ -22,20 +24,21 @@ sap.ui.define([
                 var oStep1 = this.getView().byId("tipoEmpleado");
                 var oStep2 = this.getView().byId("datosEmpleado");
                 var oStep3 = this.getView().byId("infAdicional");
-
                 this._oModel = new JSONModel({
                     nombre: "",
                     apellido: "",
                     type: "",
                     salario: 0,
                     state: "None",
-                    cifDin: ""
-                    //                    fechaIncorporacion: new Date()
+                    cifDin: "",
+                    come: ""
                 });
+
                 oView.setModel(this._oModel, "wizard");
                 oStep1.setValidated(false);
                 oStep2.setValidated(false);
                 oStep3.setValidated(false);
+                this._steps.discardProgress(oStep1);
                 this._steps.goToStep(oStep1);
 
             },
@@ -59,7 +62,7 @@ sap.ui.define([
             onInterno: function () {
                 var ocfiDnie = this.getView().byId("_IDGenInput2");
                 this._onConfiguracionSlider(24000, 12000, 80000);
-                this._oModel.setProperty("/type", "1");
+                this._oModel.setProperty("/type", "0");
                 ocfiDnie.setProperty("placeholder", "Ingrese el CIF");
                 this._onStep2();
                 // var oVista = this.getView().byId("datosEmpleado")
@@ -75,7 +78,7 @@ sap.ui.define([
             onAutonomo: function () {
                 var ocfiDnie = this.getView().byId("_IDGenInput2");
                 this._onConfiguracionSlider(400, 100, 2000);
-                this._oModel.setProperty("/type", "2");
+                this._oModel.setProperty("/type", "1");
                 ocfiDnie.setProperty("placeholder", "Ingrese el DNI");
                 this._onStep2();
 
@@ -83,7 +86,7 @@ sap.ui.define([
             onGerente: function () {
                 var ocfiDnie = this.getView().byId("_IDGenInput2");
                 this._onConfiguracionSlider(70000, 50000, 200000);
-                this._oModel.setProperty("/type", "1");
+                this._oModel.setProperty("/type", "2");
                 ocfiDnie.setProperty("placeholder", "Ingrese el CIF");
                 this._onStep2();
             },
@@ -142,7 +145,7 @@ sap.ui.define([
 
             },
             onValDIN: function (oEvent) {
-                if (this._oModel.getProperty("/type") === '2') {
+                if (this._oModel.getProperty("/type") === '1') {
                     let oDni = oEvent.getParameter("value");
                     //let oExp = /^[0-9]+[0-9kK]{1}$/;
                     let oExp = /^[0-9]+[0-9kK]{1}$/;
@@ -173,8 +176,7 @@ sap.ui.define([
                 } else {
                     oEstructura.apellidoState = "None";
                 };
-
-                if (!oEstructura.cifDin) {
+                if (!oEstructura.cifDin.trim()) {
                     oFlag = false;
                     oEstructura.state = "Error";
                 } else {
@@ -198,7 +200,7 @@ sap.ui.define([
                     this._steps.invalidateStep(this.byId("datosEmpleado"));
                 };
 
-                if(callback){
+                if (callback) {
                     callback(oFlag);
                 };
 
@@ -229,58 +231,94 @@ sap.ui.define([
                 // actualiza el modelo, subimo un archivo nuevo, se va reflejar en la vista de los archivos
                 //                oEvent.getSource().getBinding("items").refresh();
 
-                var uploadCollection = this.byId("UploadCollection");
-                var files = uploadCollection.getItems();
-                var numFiles = uploadCollection.getItems().length;
             },
             wizardCompletedHandler: function (oEvent) {
-                var prueba;
+
             },
 
-            onRevisar: function(oEvent) {
+            onRevisar: function (oEvent) {
                 var oWizardNavContainer = this.getView().byId("wizardNavContainer");
+                this._oUploadCollection = this.getView().byId("uploadCollection");
                 var oPage = this.getView().byId("revisar");
-                this.onValidarEmpleados(oEvent, function(oFlag) {
-                    var prueba = '';
-                    oWizardNavContainer.to(oPage);
-                    //Revisar
-                    //<NavContainer id="wizardNavContainer">
+                this.onValidarEmpleados(oEvent, function (oFlag) {
+                    if (oFlag) {
+                        oWizardNavContainer.to(oPage);
+                        //this._oNavContainer 
+                        // var uploadCollection = this.byId("UploadCollection");
+                    } else {
+                        this._oNavContainer.goToStep(this.byId("datosEmpleado"));
+                    }
+
                 });
 
             },
 
-            _onEditarStep: function(step) {
+            _onEditarStep: function (step) {
                 var wizardNavContainer = this.byId("wizardNavContainer");
                 var fnAfterNavigate = function () {
                     this._steps.goToStep(this.byId(step));
-                      wizardNavContainer.detachAfterNavigate(fnAfterNavigate);
-                    }.bind(this);
-        
+                    wizardNavContainer.detachAfterNavigate(fnAfterNavigate);
+                }.bind(this);
+
                 wizardNavContainer.attachAfterNavigate(fnAfterNavigate);
                 wizardNavContainer.back();
             },
 
-            onEditarTipoEmpleado: function(oEvent) {
-	            this._onEditarStep.bind(this)("tipoEmpleado");
+            onEditarTipoEmpleado: function (oEvent) {
+                this._onEditarStep.bind(this)("tipoEmpleado");
             },
 
-            onDatosEmpleado: function() {
+            onDatosEmpleado: function () {
                 this._onEditarStep.bind(this)("datosEmpleado");
             },
 
-            onInfAdicional: function() {
+            onInfAdicional: function () {
                 this._onEditarStep.bind(this)("infAdicional");
             },
 
-            onCancelar: function() {
-               sap.m.MessageBox.confirm(this.oView.getModel("i18n").getResourceBundle().getText("preguntaCancelar"),{
-                    onClose : function(oAction) { 
-                        if(oAction === "OK") {
+            onCancelar: function () {
+                sap.m.MessageBox.confirm(this.oView.getModel("i18n").getResourceBundle().getText("preguntaCancelar"), {
+                    onClose: function (oAction) {
+                        if (oAction === "OK") {
                             var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
-                            oRouter.navTo("RouteMain",{},true);
+                            oRouter.navTo("RouteMain", {}, true);
                         }
                     }.bind(this)
-               });
+                });
+
+            },
+            _onGuardarAtachment: function () {
+                this._oUploadCollection.upload();
+            },
+            onGuardarEmpleado: function () {
+                var wizardNavContainer = this._oNavContainer;
+                var files = this._oUploadCollection.getItems();
+                var numFiles = files.length
+                var body = {
+                    SapId: this.getOwnerComponent().SapId,
+                    Type: this._oModel.getData().type,
+                    FirstName: this._oModel.getData().nombre,
+                    LastName: this._oModel.getData().apellido,
+                    Dni: this._oModel.getData().cifDin,
+                    CreationDate: this._oModel.getData().fechaIncorporacion,
+                    Comments: this._oModel.getData().come,
+                    UserToSalary: [{
+                        Ammount: parseFloat(this._oModel.getData().salario).toString(),
+                        Comments: this._oModel.getData().come,
+                        Waers: "EUR"
+                    }]
+                };
+
+                this.getView().getModel("employeeModel").create("/Users", body, {
+                    success: function (data) {
+                        MessageBox.success(data.EmployeeId);
+                        this._onGuardarAtachment();
+                    }.bind(this),
+                    error: function (e) {
+                        sap.m.MessageToast.show(e);
+                    }.bind(this)
+
+                });
 
             }
 
