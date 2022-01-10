@@ -14,16 +14,12 @@ sap.ui.define([
         return Controller.extend("logaligroup.gestionhr.controller.CreateEmp", {
 
             onBeforeRendering: function () {
-
-            },
-
-            onInit: function () {
                 var oView = this.getView();
                 this._oNavContainer = this.getView().byId("wizardNavContainer");
                 this._steps = this.byId("CreateEmpleado");
-                var oStep1 = this.getView().byId("tipoEmpleado");
-                var oStep2 = this.getView().byId("datosEmpleado");
-                var oStep3 = this.getView().byId("infAdicional");
+                this._oStep1 = this.getView().byId("tipoEmpleado");
+                this._oStep2 = this.getView().byId("datosEmpleado");
+                this._oStep3 = this.getView().byId("infAdicional");
                 this._oModel = new JSONModel({
                     nombre: "",
                     apellido: "",
@@ -35,12 +31,15 @@ sap.ui.define([
                 });
 
                 oView.setModel(this._oModel, "wizard");
-                oStep1.setValidated(false);
-                oStep2.setValidated(false);
-                oStep3.setValidated(false);
-                this._steps.discardProgress(oStep1);
-                this._steps.goToStep(oStep1);
+                this._oStep1.setValidated(false);
+ //               this._oStep2.setValidated(false);
+ //               this._oStep3.setValidated(false);
+                this._steps.discardProgress(this._oStep1);
+                this._steps.goToStep(this._oStep1);
 
+            },
+
+            onInit: function () {
             },
 
             _onConfiguracionSlider: function (val, min, max) {
@@ -210,8 +209,8 @@ sap.ui.define([
                 let fileName = oEvent.getParameter("fileName");
                 let oCustomerHeaderSlug = new sap.m.UploadCollectionParameter({
                     name: "slug",
-                    value: this.getOwnerComponent().SapId + ";004;" + fileName
-                    // value: this.getOwnerComponent().SapId+";"+this.newUser+";"+oEvent.getParameter("fileName")
+                    value: this.getOwnerComponent().SapId + ";" + this._newUser + ";" + fileName
+                    // value: this.getOwnerComponent().SapId+";"+this._newUser+";"+oEvent.getParameter("fileName")
                 });
                 oEvent.getParameters().addHeaderParameter(oCustomerHeaderSlug);
             },
@@ -235,7 +234,7 @@ sap.ui.define([
             wizardCompletedHandler: function (oEvent) {
 
             },
-
+  
             onRevisar: function (oEvent) {
                 var oWizardNavContainer = this.getView().byId("wizardNavContainer");
                 this._oUploadCollection = this.getView().byId("uploadCollection");
@@ -311,12 +310,26 @@ sap.ui.define([
 
                 this.getView().getModel("employeeModel").create("/Users", body, {
                     success: function (data) {
+                        this._newUser = data.EmployeeId;
                         MessageBox.success(data.EmployeeId);
                         this._onGuardarAtachment();
+                        sap.m.MessageBox.information(this.oView.getModel("i18n").getResourceBundle().getText("empNuevo") + ": " + this._newUser, {
+                            onClose: function () {
+                                this._oNavContainer.back();
+                                this._oStep1.setValidated(false);
+                                this._oStep2.setValidated(false);
+                                this._oStep3.setValidated(false);
+                                this._steps.discardProgress(this._oStep1);
+                                var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+                                oRouter.navTo("RouteMain", {}, true);
+                            }.bind(this)
+                        });
                     }.bind(this),
                     error: function (e) {
                         sap.m.MessageToast.show(e);
+                        this.getView().setBusy(false);
                     }.bind(this)
+                    
 
                 });
 

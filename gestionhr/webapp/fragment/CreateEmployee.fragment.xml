@@ -1,0 +1,53 @@
+<core:FragmentDefinition 
+    xmlns:core="sap.ui.core"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m" 
+    xmlns:f="sap.ui.layout.form">
+	<Dialog id="_IDGenDialog1CreateEmp" title="{i18n>createEmp}">
+		<content>
+			<f:Form id="_IDGenForm1CreateEmp">
+					<f:layout>
+						<f:ResponsiveGridLayout id="_IDGenResponsiveGridLayout1CreateEmp"
+							labelSpanXL="3"
+							labelSpanL="3"
+							labelSpanM="3"
+							labelSpanS="12"
+							adjustLabelSpan="false"
+							emptySpanXL="4"
+							emptySpanL="4"
+							emptySpanM="4"
+							emptySpanS="0"
+							columnsXL="1"
+							columnsL="1"
+							columnsM="1"
+							singleContainerFullSize="false" />
+					</f:layout>
+					<f:formContainers>
+						<f:FormContainer id="_IDGenFormContainer1CreateEmp">
+							<f:formElements>
+								<f:FormElement id="_IDGenFormElement1CreateEmp" label="{i18n>sala}">
+									<f:fields>
+										<Input value="{createEmp>/Ammount}" id="nameCreateEmp" type="Number" placeholder="Ingrese el salario"/>
+									</f:fields>
+								</f:FormElement>
+								<f:FormElement id="_IDGenFormElement2CreateEmp" label="{i18n>fec}">
+									<f:fields>
+										<DatePicker id="_IDGenDatePicker1CreateEmp" dateValue="{createEmp>/CreationDate}"></DatePicker>
+									</f:fields>
+								</f:FormElement>
+								<f:FormElement id="_IDGenFormElement3CreateEmp" label="{i18n>come}">
+									<f:fields>
+										<TextArea id="_IDGenTextArea1CreateEmp" value="{createEmp>/Comments}"></TextArea>
+									</f:fields>
+								</f:FormElement>
+							</f:formElements>
+						</f:FormContainer>
+					</f:formContainers>
+			</f:Form>
+		</content>
+		<buttons>
+			<Button id="_IDGenButton1CreateEmp" text="{i18n>aceptar}" press="onCreateEmp"></Button>
+			<Button id="_IDGenButton2CreateEmp" text="{i18n>canc}" press="onCanc"></Button>
+		</buttons>
+	</Dialog>
+</core:FragmentDefinition>

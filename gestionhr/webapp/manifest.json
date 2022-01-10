@@ -93,7 +93,15 @@
                     "target": [
                         "CreateEmp"
                     ]
+                },
+                {
+                    "name": "ShowEmp",
+                    "pattern": "ShowEmp",
+                    "target": [
+                        "ShowEmp"
+                    ]
                 }
+                
             ],
             "targets": {
                 "TargetMain": {
@@ -109,7 +117,15 @@
                     "clearControlAggregation": false,
                     "viewId": "CreateEmp",
                     "viewName": "CreateEmp"
+                },
+                "ShowEmp": {
+                    "viewType": "XML",
+                    "transition": "slide",
+                    "clearControlAggregation": false,
+                    "viewId": "ShowEmp",
+                    "viewName": "ShowEmp"
                 }
+                 
             }
         },
         "rootView": {

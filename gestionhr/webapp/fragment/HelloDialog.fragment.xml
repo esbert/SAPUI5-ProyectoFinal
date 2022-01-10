@@ -19,7 +19,7 @@
 			columnsM="1"
 			singleContainerFullSize="false"
 			ariaLabelledBy="Title1">
-        <form:content>    
+        <!-- <form:content>    
         	<Toolbar ariaLabelledBy="Title2">
 				<Title id="Title2" text="Interno"/>
 			</Toolbar>
@@ -34,7 +34,7 @@
             <Label text="Fecha de Incorporación:" required="true"/>
             <Input placeholder="Ingrese Fecha" />
 
-        </form:content>    
+        </form:content>     -->
      <!-- <VBox alignItems="Center" 
           justifyContent="Center"
 		width="100%">

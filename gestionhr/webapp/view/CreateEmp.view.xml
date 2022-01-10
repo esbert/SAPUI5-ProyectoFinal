@@ -33,9 +33,9 @@
 										width="320px"
 										selectionChange="setProductTypeFromSegmented">
 										<items>
-											<SegmentedButtonItem id="_IDGenSegmentedButtonItem1" icon="sap-icon://add-employee" text="{i18n>interno}" press="onInterno"/>
-											<SegmentedButtonItem id="_IDGenSegmentedButtonItem2" icon="sap-icon://add-employee" text="{i18n>autonomo}" press="onAutonomo"/>
-											<SegmentedButtonItem id="_IDGenSegmentedButtonItem3" icon="sap-icon://add-employee" text="{i18n>gerente}" press="onGerente"/>
+											<SegmentedButtonItem id="_IDGenSegmentedButtonItem1" icon="sap-icon://employee-pane" text="{i18n>interno}" press="onInterno"/>
+											<SegmentedButtonItem id="_IDGenSegmentedButtonItem2" icon="sap-icon://employee" text="{i18n>autonomo}" press="onAutonomo"/>
+											<SegmentedButtonItem id="_IDGenSegmentedButtonItem3" icon="sap-icon://leads" text="{i18n>gerente}" press="onGerente"/>
 										</items>
 									</SegmentedButton>
 								</HBox>        
@@ -157,7 +157,7 @@
 										alignItems="Center"
 										justifyContent="Center"
 										width="100%">
-                                <Text text="{i18n>res}" />           
+                                <Text id="_IDGenText2" text="{i18n>res}" />           
                           </HBox>              
 						<core:Fragment fragmentName="logaligroup.gestionhr.fragment.ReviewPage" type="XML"/>
 						<footer>

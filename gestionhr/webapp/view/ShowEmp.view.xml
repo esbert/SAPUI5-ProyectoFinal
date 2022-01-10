@@ -1,0 +1,110 @@
+<mvc:View
+    controllerName="logaligroup.gestionhr.controller.ShowEmp"
+    xmlns:mvc="sap.ui.core.mvc"
+    displayBlock="true"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:suite="sap.suite.ui.commons"
+	xmlns:form="sap.ui.layout.form"
+	xmlns:u="sap.ui.unified">
+    <SplitApp id="splitAppEmployee">
+		<masterPages>
+            <Page id="idMaster" showHeader="false">
+				<Toolbar id="idTolbarMaster" class="sapUiTinyMarginTop">
+					<Button id="idBotBackMaster" icon="sap-icon://nav-back" press="onPressBack"></Button>
+					<SearchField id="idSearchMaster" liveChange="onSearchEmployee" width="100%" />
+				</Toolbar>
+               	<List id="idListMaster" itemPress="onSelEmployee" items="{path:'employeeModel>/Users',filters:[{path:'SapId',operator:'EQ',value1:'esbertmontiel@gmail.com'}]}">
+					<items>
+						<StandardListItem id="idStandardListItemMaster" title="{employeeModel>FirstName} {employeeModel>LastName}" description="{employeeModel>Dni}" type="Active"/>
+					</items>
+				</List>
+			</Page>
+		</masterPages>
+		<detailPages>
+            <Page id="idPage1Detail" showHeader="false">
+				<FlexBox id="idGenFlexBoxDetail" alignItems="Center" justifyContent="Center" height="100%">
+					<Text id="idGenText1Detail" text="{i18n>selEmpleado}"></Text>
+				</FlexBox>
+			</Page>
+            <Page id="idPage2Detail" title="{i18n>detEmpleado}">
+                <ObjectHeader id="idGenObjectHeader1Detail"
+                        icon= "{= ${employeeModel>Type}==='0' ? 'sap-icon://employee-pane' : ${employeeModel>Type}==='1' ? 'sap-icon://employee' : 'sap-icon://leads' }"
+                        title="{employeeModel>FirstName} {employeeModel>LastName}"
+                        intro="{employeeModel>Dni}"
+                        class="sapUiResponsivePadding--header"
+                        responsive="true">
+                            <ObjectAttribute id="idGenObjectAttribute1Detail" title="{i18n>fechaIncorporacion}" text="{ path:'employeeModel>CreationDate', type:'sap.ui.model.type.Date'}" />
+                            <ObjectAttribute id="idGenObjectAttribute2Detail" title="{i18n>tipo}" text="{= ${employeeModel>Type} === '0' ? ${i18n>interno} : ${employeeModel>Type} === '1' ? ${i18n>autonomo} : ${i18n>gerente}}" />
+                            <ObjectAttribute id="idGenObjectAttribute3Detail" title="{i18n>come}" text="{employeeModel>Comments}" />
+                </ObjectHeader>
+                <IconTabBar id="idGenIconTabBar1Detail" class="sapUiResponsiveContentPadding">
+                    <items>
+                        <IconTabFilter id="idGenIconTabFilter1Detail"
+							design="Horizontal"
+							icon="sap-icon://attachment"
+							text="{i18n>fichero}">
+                            	<UploadCollection
+                                        id="UploadCollection1Detail"
+                                        maximumFilenameLength="55"
+                                        maximumFileSize="10"
+                                        multiple="true"
+                                        sameFilenameAllowed="true"
+                                        instantUpload="true"
+                                        uploadUrl="/sap/opu/odata/sap/ZEMPLOYEES_SRV/Attachments"
+                                        items="{employeeModel>UserToAttachment}"
+                                        change="onFileChange"
+                                        uploadComplete="onFileUploadComplete"
+                                        beforeUploadStarts="onFileBeforeUpload"
+                                        fileDeleted="onFileDeleted"
+                                        noDataDescription="{i18n>Arrastrarficheros}">
+                                    <items>
+                                        <UploadCollectionItem id="UploadCollection2Detail"
+                                            documentId="{employeeModel>AttId}"
+                                            visibleEdit="false"
+                                            fileName="{employeeModel>DocName}"
+                                            press="downloadFile">
+                                        </UploadCollectionItem>
+                                    </items>
+                                </UploadCollection>        
+                        </IconTabFilter>  
+                        <IconTabFilter id="idGenIconTabFilter21Detail"
+							icon="sap-icon://money-bills"
+							design="Horizontal"
+							text="{i18n>historial}">
+                            <suite:Timeline id="_IDGenTimeline1Detail"
+                                enableDoubleSided="true"
+								groupByType="Year"
+								groupBy="CreationDate"
+								showHeaderBar="false"
+								enableScroll="false"
+								height="100%"
+								sortOldestFirst="true"
+								content="{employeeModel>UserToSalary}">
+                                    <suite:content>
+                                        <suite:TimelineItem id="_IDGenTimeline2Item1Detail"
+                                                            userName="{parts:[{path:'employeeModel>Ammount'},{path:'employeeModel>Waers'}],
+                                                                    type: 'sap.ui.model.type.Currency',
+                                                                    formatOptions: {showMeasure: false}}"
+                                                            icon="sap-icon://circle-task"
+                                                            text="{employeeModel>Comments}"
+                                                            dateTime="{employeeModel>CreationDate}">
+                                        </suite:TimelineItem>
+                                    </suite:content>
+                            </suite:Timeline>
+                        </IconTabFilter>    
+
+                    </items>
+                </IconTabBar>
+               	<footer>
+					<Toolbar id="_IDGenToolbar2Detail">
+						<ToolbarSpacer id="idGenToolbarSpacer1Detail"></ToolbarSpacer>
+						<Button id="idGenButton1Detail" text="{i18n>darDeBaja}" press="onDeleteEmployee"></Button>
+                        <Button id="idGenButton2Detail" text="{i18n>ascender}" press="onRiseEmployee"></Button>
+					</Toolbar>
+				</footer>
+
+            </Page>  
+		</detailPages>
+	</SplitApp>
+</mvc:View>
